@@ -5,7 +5,7 @@ return [
     'dbname' => 'gestion_projets',
     'user' => 'root',
     'password' => '',
-    'charset' => 'utf8'
+   
 ];
 
 ?>

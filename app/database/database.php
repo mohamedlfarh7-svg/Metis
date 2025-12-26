@@ -8,7 +8,7 @@ class Database
     {
         if (self::$conn === null) {
             self::$conn = new PDO(
-                "mysql:host=localhost;dbname=gestion_projets;charset=utf8",
+                "mysql:host=localhost;dbname=gestion_projets",
                 "root",
                 "",
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]

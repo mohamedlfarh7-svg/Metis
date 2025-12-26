@@ -1,32 +1,33 @@
 <?php
-require_once 'Database.php';
+require_once '../metisAPP/app/database/database.php';
 
 class BaseModel
 {
-    protected $db;
-    protected $table;
+    protected PDO $db;
+    protected string $table;
 
     public function __construct()
     {
         $this->db = Database::connect();
     }
 
-    public function findById($id)
+    public function findById(int $id): array|false
     {
-        $sql = "SELECT * FROM $this->table WHERE id = $id";
-        return $this->db->query($sql)->fetch();
+        $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $sql = "DELETE FROM $this->table WHERE id = $id";
-        return $this->db->query($sql);
+        $stmt = $this->db->prepare("DELETE FROM {$this->table} WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
     }
 
-    public function save($nom)
+    public function getAll(): array
     {
-        $sql = "INSERT INTO $this->table (nom) VALUES ('$nom')";
-        return $this->db->query($sql);
+        $stmt = $this->db->query("SELECT * FROM {$this->table}");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+?>
